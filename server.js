@@ -14,16 +14,22 @@ var cheerio = require("cheerio");
 var db = require("./models");
 
 //assign a port for our app
-var PORT = 8800;
+var PORT = process.env.PORT || 8800
 
 //initialize Express
 var app = express();
 
+//set up Handlebars for our app
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
 //configure our middleware
 // Use morgan logger for logging requests
 app.use(logger("dev"));
+
 //we'll use body parser for handling form submissions
 app.use(bodyParser.urlencoded({extended : false}));
+
 //we'll use express.static to server the public folder as a static strategy
 app.use(express.static("public"));
 
@@ -38,6 +44,19 @@ mongoose.connect("mongodb://localhost/mongoHeadlines", {
 /*************
  == ROUTES ==
 *************/
+
+app.get("/", function(req, res) {
+  //find all articles in the collection (Article)
+  db.Article
+  .find({})
+  .then(function (dbArticle) {
+    //send back all articles to the client
+    res.render("index", dbArticle);
+  })
+  .catch(function(err) {
+    res.json(err);
+  })
+});
 
 //this is the GET route for scraping news details from the website
 app.get("/scrape", function(req, res) {
