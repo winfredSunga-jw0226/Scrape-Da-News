@@ -51,7 +51,8 @@ app.get("/", function(req, res) {
   .find({})
   .then(function (dbArticle) {
     //send back all articles to the client
-    res.render("index", dbArticle);
+    res.render("index", {news : dbArticle});
+    //console.log(dbArticle);
   })
   .catch(function(err) {
     res.json(err);

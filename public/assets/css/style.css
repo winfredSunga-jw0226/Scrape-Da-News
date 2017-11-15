@@ -1,0 +1,6 @@
+.background-image {
+  height : 650px;
+  background : url('https://www.telapost.com/wp-content/uploads/2016/01/newspaper.jpg') no-repeat center center fixed;;
+  /*background-color : green;*/
+  opacity: 0.80;
+}
