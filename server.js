@@ -34,12 +34,14 @@ mongoose.connect("mongodb://localhost/mongoHeadlines", {
   useMongoClient : true
 });
 
+
 /*************
  == ROUTES ==
 *************/
 
 //this is the GET route for scraping news details from the website
 app.get("/scrape", function(req, res) {
+  //create index on Article model
 
   var rootURL = "http://www.sfchronicle.com";
 
@@ -57,17 +59,17 @@ app.get("/scrape", function(req, res) {
       result.headline = $(element).children("a").text().trim();
       result.summary = $(element).next("p").text().trim();
       result.url = rootURL + $(element).children("a").attr("href");
-      result.saved = false;
+      //result.saved = false;
       
       //if the element has all 3 variables assigned
       if (result.headline && result.summary && result.url) {
         //insert into mongodb
         db.Article
-        .create(result)
+        .insertMany(result)
         .then(function(dbArticle) {
           //send message to the client after a succesful scrape
-          //res.send("Scrape complete!");
-          console.log("Scrape Complete!");
+          res.send("Scrape complete!");
+          //res.json(dbArticle);
         })
         .catch(function(err) {
           //If an error occurred, send the client an error message

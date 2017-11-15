@@ -9,6 +9,7 @@ var ArticleSchema = new Schema({
   //headline is required and of type String
   headline : {
     type : String,
+    unique : true,
     required : true
   },
   //summary is required and of type String
@@ -22,7 +23,8 @@ var ArticleSchema = new Schema({
   },
   saved : {
     type : Boolean,
-    required : true
+    default : false
+    //required : true
   },
   comment : {
     type : Schema.Types.ObjectId,
