@@ -42,6 +42,16 @@ $(".unsave-article").on("click", function(event) {
     //reload the page
     location.reload();
   })
+});
 
-})
+//event listener for hitting the Article Comments button
+$(".comment").on("click", function(event) {
+  //prevent page from simply refresing
+  event.preventDefault();
+  var articleId = $(this).attr("data-article-id");
+
+  //place the article id in the modal header
+  $(".modal-title").text("Comments for Article: " + articleId);
+
+});
 
