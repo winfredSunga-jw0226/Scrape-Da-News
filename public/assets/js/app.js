@@ -48,10 +48,34 @@ $(".unsave-article").on("click", function(event) {
 $(".comment").on("click", function(event) {
   //prevent page from simply refresing
   event.preventDefault();
+
   var articleId = $(this).attr("data-article-id");
 
   //place the article id in the modal header
   $(".modal-title").text("Comments for Article: " + articleId);
 
+  //add data attribute to the modal's save button
+  $("#submit-comment").attr("data-article-id", articleId);
+
+});
+
+//event listener for saving comments
+$("#submit-comment").on("click", function(event) {
+  //prevent page from simply refresing
+  event.preventDefault();
+
+  //grab the article id from the data attribute of the modal's save button
+  var articleId = $("#submit-comment").attr("data-article-id");
+
+  //grab the comment to pass to the server
+  var comment = $("#comment-text").val().trim();
+
+  console.log(comment);
+
+  //submit a POST request to the server, for this route - /savednews/comments/:id
+  $.post("/savednews/articles/" + articleId + "/comments", {text : comment}, function(response) {
+    //reload the page
+    location.reload();
+  });
 });
 
