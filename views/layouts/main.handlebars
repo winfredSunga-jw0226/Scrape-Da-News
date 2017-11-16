@@ -10,20 +10,29 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     {{!-- Custom CSS --}}
   <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
-
 </head>
 <body>
-  <div class="jumbotron text-center">
-    <div class="container">
-      <div class="background-image">
-      </div>  
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid bg-success">
+      <a class="navbar-brand" href="/">SF Chronicle Scraper</a>
+      <a class="navbar-link" href="/savednews">Saved Articles</a>&nbsp;&nbsp;&nbsp;
+      {{#unless saved}}
+        <button type="button" class="btn btn-danger navbar-btn" id="btn-scrape">Scrape New Articles</button>
+      {{/unless}}  
     </div>
+  </nav>
+  <div class="jumbotron text-center">
+    <div id="jumbotron-text-div center-block">
+      <h1>Scrape-Da-News</h1>
+      <h2>San Francisco Chronicle Edition</h2>
+    </div> 
+
   </div>
 
   <div class="container">
     {{{body}}}
-  </div>  
-  
-
+  </div>
+  {{!-- Client-side Javascript   --}}
+  <script type="text/javascript" src="/assets/js/app.js"></script>
 </body>
 </html>

@@ -5,7 +5,8 @@
         <div class="panel-heading">
           <h3 class="panel-title clearfix">
             <a class="headline-link" href="{{url}}" alt="link for {{headline}}">{{headline}}</a>
-            <a class="btn btn-success save-article pull-right" data-article-id={{_id}}>Save Article</a>
+            <a class="btn btn-danger unsave-article pull-right" href="#" data-article-id={{_id}}>Unsave</a>
+            <a class="btn btn-success comment pull-right" href="#"data-article-id={{_id}}>Article Comments</a>
           </h3>
         </div>
         <div class="panel-body">
@@ -16,7 +17,3 @@
     </div>
   </div>
 {{/each}}
-
-
-
-

@@ -1,6 +1,25 @@
-.background-image {
+.jumbotron {
   height : 650px;
-  background : url('https://www.telapost.com/wp-content/uploads/2016/01/newspaper.jpg') no-repeat center center fixed;;
+  width : 100%;
+  background : url('https://bawza.com/wp-content/uploads/2017/08/5c87c15d2189b41b92e8c89149e3ee26.jpg') center;;
   /*background-color : green;*/
-  opacity: 0.80;
+  opacity: 0.90;
+}
+
+.save-article:hover {
+  cursor : grab;
+}
+
+h1, h2, h3, h4 {
+  font-weight: bolder;
+  color : white;
+}
+
+/*h2 {
+  font-weight: bold;
+  color : white;
+}*/
+
+#jumbotron-text-div {
+  margin : auto;
 }

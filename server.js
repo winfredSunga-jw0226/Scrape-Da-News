@@ -4,6 +4,7 @@ var exphbs = require("express-handlebars");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var logger = require("morgan");
+var methodOverride = require("method-override");
 
 
 //require our scraping tools
@@ -27,6 +28,9 @@ app.set("view engine", "handlebars");
 // Use morgan logger for logging requests
 app.use(logger("dev"));
 
+// override all PUT and DELETE methods with POST 
+app.use(methodOverride('_method'))
+
 //we'll use body parser for handling form submissions
 app.use(bodyParser.urlencoded({extended : false}));
 
@@ -42,99 +46,24 @@ mongoose.connect("mongodb://localhost/mongoHeadlines", {
 
 
 /*************
- == ROUTES ==
+ == ROUTING ==
 *************/
+//import routes and give the server access to them
+var allNewsRoutes = require("./routes/all-news-routes.js");
+var savedNewsRoutes = require("./routes/saved-news-routes.js")
 
+//listen for a GET request to the root URL
 app.get("/", function(req, res) {
-  //find all articles in the collection (Article)
-  db.Article
-  .find({})
-  .then(function (dbArticle) {
-    //send back all articles to the client
-    res.render("index", {news : dbArticle});
-    //console.log(dbArticle);
-  })
-  .catch(function(err) {
-    res.json(err);
-  })
+  //redirect to the /allnews route
+  res.redirect("/allnews");
 });
 
-//this is the GET route for scraping news details from the website
-app.get("/scrape", function(req, res) {
-  //create index on Article model
-
-  var rootURL = "http://www.sfchronicle.com";
-
-  //make a request to SF Chronicle, for all its news headings
-  request(rootURL, function(err, response, html) {
-    //load the html body from request into cheerio
-    var $ = cheerio.load(html);
-
-    //iterate through each element with a headline class
-    $(".headline").each(function(index, element) {
-      //create an empty result object which we'll populate later
-      var result = {};
-
-      //create the headline, summary, URL, and saved as key value pairs
-      result.headline = $(element).children("a").text().trim();
-      result.summary = $(element).next("p").text().trim();
-      result.url = rootURL + $(element).children("a").attr("href");
-      //result.saved = false;
-      
-      //if the element has all 3 variables assigned
-      if (result.headline && result.summary && result.url) {
-        //insert into mongodb
-        db.Article
-        .insertMany(result)
-        .then(function(dbArticle) {
-          //send message to the client after a succesful scrape
-          res.send("Scrape complete!");
-          //res.json(dbArticle);
-        })
-        .catch(function(err) {
-          //If an error occurred, send the client an error message
-          res.json(err);
-        });
-        //res.send("Scrape complete!");
-      }
-    });
-  });
-});
-
-//this is the route to GET all articles from the database
-app.get("/articles", function(req, res) {
-
-});
-
-//this is the route to GET a specific article by its ID
-app.get("articles/:id", function(req, res) {
-
-});
-
-//this is the route to delete an article
-app.delete("articles/:id", function(req, res) {
-
-});
-
-//this is the route to save a comment for a specific article
-app.post("comments/:id", function(req, res) {
-
-});
-
-//this is the show all comments for a specific article
-app.get("articles/:id/comments", function(req, res) {
-
-});
-
-
-//this is the route to delete a comment from an article
-app.delete("articles/notes/:id", function(req, res) {
-
-});
-
+//use and set the root for all routes
+app.use("/allnews", allNewsRoutes);
+app.use("/savednews", savedNewsRoutes);
 
 //start the server
 app.listen(PORT, function() {
   console.log(`App running on port : ${PORT}!`);
-})
+});
 
