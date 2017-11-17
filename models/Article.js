@@ -26,10 +26,13 @@ var ArticleSchema = new Schema({
     default : false
     //required : true
   },
-  comment : {
-    type : Schema.Types.ObjectId,
-    ref : "Comment"
-  }
+  //comment is an array populated by 
+  comments : [
+    {
+      type : Schema.Types.ObjectId,
+      ref : "Comment"
+    }
+  ]
 });
 
 //this creates our model from the above schema, using mongoose's model method

@@ -8,17 +8,17 @@
           <h4 class="modal-title">Notes for Article : </h4>
         </div>
         <div class="modal-body">
-          {{#if commented}}
-            {{#each}}
-              <div class="div-comment text-center">
-                <p>{{comment}}</p>
-                <button type="button" class="btn btn-danger">X</button>
-            </div>  
-            {{/each}}
-          {{/if}}
-          {{#unless commented}}
-            <div class="div-comment text-center">No comment for this article yet</div> 
-          {{/unless}}
+          {{!-- {{#if commented}} --}}
+            {{!-- {{#each comments}} --}}
+              {{!-- <div class="div-comment text-center"> --}}
+                {{!-- <p>{{text}}</p> --}}
+                {{!-- <button type="button" class="btn btn-danger">X</button> --}}
+            {{!-- </div>   --}}
+            {{!-- {{/each}} --}}
+          {{!-- {{/if}} --}}
+          {{!-- {{#unless commented}} --}}
+            {{!-- <div class="div-comment text-center">No comment for this article yet</div>  --}}
+          {{!-- {{/unless}} --}}
           <br><br>
           <form class="clearfix">
             <textarea id="comment-text"class="form-control" rows="3" placeholder="Add Comment"></textarea>
@@ -40,7 +40,7 @@
             <a class="headline-link" href="{{url}}" alt="link for {{headline}}">{{headline}}</a>
             <a class="btn btn-danger unsave-article pull-right" href="#" data-article-id={{_id}}>Unsave</a>
             <!-- Trigger the modal with a button -->
-            <a class="btn btn-success comment pull-right" href="#"data-article-id={{_id}} data-article-headline={{headline}} data-toggle="modal" data-target="#myModal">Article Comments</a>
+            <a class="btn btn-success pull-right article-comments"href="#"data-article-id={{_id}} data-article-headline={{headline}} data-toggle="modal" data-target="#myModal">Article Comments</a>
           </h3>
         </div>
         <div class="panel-body">
