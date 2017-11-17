@@ -15,7 +15,9 @@ var cheerio = require("cheerio");
 var db = require("./models");
 
 //assign a port for our app
-var PORT = process.env.PORT || 8800
+//var PORT = process.env.PORT || 8800
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 //initialize Express
 var app = express();
@@ -63,7 +65,10 @@ app.use("/allnews", allNewsRoutes);
 app.use("/savednews", savedNewsRoutes);
 
 //start the server
-app.listen(PORT, function() {
-  console.log(`App running on port : ${PORT}!`);
+// app.listen(PORT, function() {
+//   console.log(`App running on port : ${PORT}!`);
+// });
+app.listen(MONGODB_URI, function() {
+  console.log(`App running on port : ${MONGODB_URI}!`);
 });
 
