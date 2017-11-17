@@ -17,8 +17,6 @@ var db = require("./models");
 //assign a port for our app
 //var PORT = process.env.PORT || 8800
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-
 //initialize Express
 var app = express();
 
@@ -41,11 +39,34 @@ app.use(express.static("public"));
 
 //set mongoose to leverage built-in JS ES6 Promises
 mongoose.Promise = Promise;
-//connect to Mongo DB
-mongoose.connect("mongodb://localhost/mongoHeadlines", {
-  useMongoClient : true
+
+//------------------- Database configuration with Mongoose ----------------?
+//--------------Define local MongoDB URI ----------------------
+var databaseUri = "mongodb://localhost/mongoHeadlines" 
+//-------------------------------------------------------------
+if (process.env.MONGODB_URI) {
+  //THIS EXECUTES IF THIS IS BEING EXECUTED IN THE HEROKU APP
+  mongoose.connect(process.env.MONGODB_URI);
+} else {
+  // THIS EXECUTES IF THIS IS BEING EXECUTED ON YOUR LOCAL MACHINE
+  mongoose.connect(databaseUri);
+}
+// mongoose.connect("mongodb://localhost/mongoHeadlines", {
+//   useMongoClient : true
+// });
+//--------------------- End of database configuration ----------------------//
+
+var db = mongoose.connection;
+
+//show any mongoose errors
+db.on("error", function(err) {
+  console.log("Mongoose Error: ", err);
 });
 
+//once logged in to the db through mongoose, log a success message
+db.once("open", function() {
+  console.log("Mongoose connection successful.");
+});
 
 /*************
  == ROUTING ==
@@ -68,7 +89,7 @@ app.use("/savednews", savedNewsRoutes);
 // app.listen(PORT, function() {
 //   console.log(`App running on port : ${PORT}!`);
 // });
-app.listen(MONGODB_URI, function() {
-  console.log(`App running on port : ${MONGODB_URI}!`);
-});
+// app.listen(MONGODB_URI, function() {
+//   console.log(`App running on port : ${MONGODB_URI}!`);
+// });
 
