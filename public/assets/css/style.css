@@ -10,22 +10,34 @@
   cursor : grab;
 }
 
-h1, h2, h3 {
+.jumbotron h1, .jumbotron h2 {
   font-weight: bolder;
   color : white;
 }
 
-/*h2 {
-  font-weight: bold;
-  color : white;
-}*/
+h1 {
+  font-family: 'Rye', cursive;
+}
 
+h2 {
+  font-family: 'Vast Shadow', cursive;
+}
 #jumbotron-text-div {
   margin : auto;
+}
+
+a {
+  color : white;
 }
 
 .div-comment {
   border : 1px solid #c9c3c2;
   color : #c9c3c2;
   padding : 20px;
+}
+
+#logo {
+  background : rgba(25, 31, 35, 0.85);
+  margin : auto;
+  padding : 50px;
 }

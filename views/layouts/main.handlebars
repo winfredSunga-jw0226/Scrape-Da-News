@@ -8,12 +8,14 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   {{!-- Bootstrap JS --}}
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    {{!-- Custom CSS --}}
+  {{!-- Google fonts --}}
+  <link href="https://fonts.googleapis.com/css?family=Rye|Vast+Shadow" rel="stylesheet">
+  {{!-- Custom CSS --}}
   <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid bg-success">
+    <div class="container-fluid bg-info">
       <a class="navbar-brand" href="/">SF Chronicle Scraper</a>
       <a class="navbar-link" href="/savednews">Saved Articles</a>&nbsp;&nbsp;&nbsp;
       {{#unless saved}}
@@ -23,8 +25,10 @@
   </nav>
   <div class="jumbotron text-center">
     <div id="jumbotron-text-div center-block">
-      <h1>Scrape-Da-News</h1>
-      <h2>San Francisco Chronicle Edition</h2>
+      <div id="logo">
+        <h1>Scrape-Da-News</h1>
+        <h2>San Francisco Chronicle Edition</h2>
+      </div>
     </div> 
 
   </div>

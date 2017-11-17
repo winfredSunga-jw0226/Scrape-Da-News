@@ -30,19 +30,19 @@ router.get("/", function(req, res) {
 router.post("/articles/:id/comments", function(req, res) {
   console.log(req.body);
   db.Comment
-    .create(req.body)
-    .then(function(dbComment) {
-      //find the associated article id in Article model and update it's comment field, and return the updated Article so that it shows the updated information
-      return db.Article.findOneAndUpdate({_id : req.params.id}, { $push : { comments : dbComment._id }}, {new : true});
-    })
-    .then(function(dbArticle) {
-      // If we were able to successfully update an Article, send it back to the client
-      res.json(dbArticle);
-    })
-    .catch(function(err) {
-      // If an error occurred, send it to the client
-      res.json(err);
-    });
+  .create(req.body)
+  .then(function(dbComment) {
+    //find the associated article id in Article model and update it's comment field, and return the updated Article so that it shows the updated information
+    return db.Article.findOneAndUpdate({_id : req.params.id}, { $push : { comments : dbComment._id }}, {new : true});
+  })
+  .then(function(dbArticle) {
+    // If we were able to successfully update an Article, send it back to the client
+    res.json(dbArticle);
+  })
+  .catch(function(err) {
+    // If an error occurred, send it to the client
+    res.json(err);
+  });
 });
 
 //this is the show all comments for a specific article
@@ -50,39 +50,37 @@ router.get("/articles/:id/comments", function(req, res) {
   console.log("I am in the show article comments!");
   //find the one article in the Article collection
   db.Article
-    .findOne({_id:req.params.id})
-    .populate("comments") //then populate all the comments associated with it
-    .then(function(dbArticle) {
-      //send it back to the client if successful
-      console.log(dbArticle);
-      var articleInfo = "";
+  .findOne({_id:req.params.id})
+  .populate("comments") //then populate all the comments associated with it
+  .then(function(dbArticle) {
+  
+    var articleInfo = "";
 
-      //if comment(s) found
-      if (dbArticle.comments.length > 0) {
-        articleInfo = {
-          articleId : req.params.id,
-          commented : true,
-          comments : dbArticle.comments
-        }
-      } else {
-        articleInfo = {
-          articleId : req.params.id,
-          commented : false
-        }
+    //if comment(s) found
+    if (dbArticle.comments.length > 0) {
+      articleInfo = {
+        articleId : req.params.id,
+        commented : true,
+        comments : dbArticle.comments
       }
-      //send the response back to client
-      res.json(articleInfo);
-    })
-    .catch(function(err) {
-      //otherwise send error message to client
-      res.json(err);
-    })
+    } else {
+      articleInfo = {
+        articleId : req.params.id,
+        commented : false
+      }
+    }
+    //send the response back to client
+    res.json(articleInfo);
+  })
+  .catch(function(err) {
+    //otherwise send error message to client
+    res.json(err);
+  })
 });
 
 
 //this is the route to delete a comment from an article
 router.put("/articles/:id/comments/:commentid", function(req, res) {
-  console.log("I am deleting comment id : " + req.params.commentid + " for article id : " + req.params.id);
   db.Article
   .updateOne({ _id : req.params.id }, { $pull : { comments : req.params.commentid} })
   .then(function(dbArticle) {

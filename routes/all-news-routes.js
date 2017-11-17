@@ -23,7 +23,6 @@ router.get("/", function(req, res) {
   .then(function (dbArticle) {
     //send back all articles to the client
     res.render("index", {article : dbArticle, saved : false});
-    //console.log(dbArticle);
   })
   .catch(function(err) {
     res.json(err);
@@ -60,23 +59,18 @@ router.get("/scrape", function(req, res) {
         .then(function(dbArticle) {
           //send message to the client after a succesful scrape
           res.send("Scrape complete!");
-          //res.json(dbArticle);
         })
         .catch(function(err) {
           //If an error occurred, send the client an error message
           res.json(err);
         });
-        //res.send("Scrape complete!");
       }
     });
   });
 });
 
-
 //this is the route to save a specific article by its ID
 router.put("/articles/:id", function(req, res) {
-  //console.log(req.params.id);
-  //console.log("I should be updating this article id : " + req.params.id);
   //update the saved field to true
   db.Article
   .update(
@@ -91,7 +85,6 @@ router.put("/articles/:id", function(req, res) {
     res.json(err);
   })
 });
-
 
 module.exports = router;
 

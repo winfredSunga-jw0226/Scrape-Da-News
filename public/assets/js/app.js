@@ -19,8 +19,6 @@ $(document).on("click", ".save-article", function(event) {
   var articleId = $(this).attr("data-article-id");
   var queryURL = "/allnews/articles/" + articleId + "?_method=PUT";
 
-  //console.log("I want to save this  article : " + articleId);
-
   //send a PUT request to the server for a specific articleid
   $.post(queryURL, function(response) {
     //reload the page
@@ -41,7 +39,7 @@ $(".unsave-article").on("click", function(event) {
   $.post(queryURL, function(response) {
     //reload the page
     location.reload();
-  })
+  });
 });
 
 //event listener for hitting the Article Comments button
@@ -52,8 +50,6 @@ $(".article-comments").on("click", function(event) {
   var articleId = $(this).attr("data-article-id");
   var queryString = "/savednews/articles/" + articleId + "/comments";
 
-  console.log("article id i want to see comments for :" + articleId)
-
   //place the article id in the modal header
   $(".modal-title").text("Comments for Article: " + articleId);
 
@@ -62,9 +58,8 @@ $(".article-comments").on("click", function(event) {
 
   //submit a GET request to the server, for this route - 
   $.get(queryString, function(response) {
-    console.log(response);
+    //populate the modal popup with data provided by the server in it's response
     populateModal(response);
-    //location.reload();
   });    
 });
 
@@ -79,19 +74,18 @@ $("#submit-comment").on("click", function(event) {
   //grab the comment to pass to the server
   var comment = $("#comment-text").val().trim();
 
-  console.log(comment);
-
-  //submit a POST request to the server, for this route - /savednews/comments/:id
-  $.post("/savednews/articles/" + articleId + "/comments", {text : comment}, function(response) {
-    //reload the page
-    console.log(response);
-    location.reload();
-  });
+  //if comment(s) exist(s)
+  if (comment) {
+    //submit a POST request to the server, for this route - /savednews/comments/:id
+    $.post("/savednews/articles/" + articleId + "/comments", {text : comment}, function(response) {
+      //reload the page
+      location.reload();
+    });
+  }
 });
 
 //listener to delete individual comments
 $(document).on("click", ".btn-delete-comment", function(event) {
-  console.log("I am going to delete this comment");
 
   var commentId = $(this).attr("data-comment-id");
   var articleId = $(this).attr("data-article-id");
@@ -99,19 +93,12 @@ $(document).on("click", ".btn-delete-comment", function(event) {
 
   $.post(queryURL, function(response) {
     //location.reload();
-    console.log(response);
   });
 });
 
 function populateModal(articleObject) {
   //first empty elements under modal-body class
-   $(".div-comment").remove();
-
-  // //place the article id in the modal header
-  // $(".modal-title").text("Comments for Article: " + articleObject._id);
-
-  // //add data attribute to the modal's save button
-  // $("#submit-comment").attr("data-article-id", articleObject._articleId);
+  $(".div-comment").remove();
 
   //if comment(s) exist for the article
   if (articleObject.comments) {
@@ -125,6 +112,7 @@ function populateModal(articleObject) {
       .attr("data-dismiss", "modal")
       .text("X");
 
+      //put the new p and btn elements inside the div
       div.prepend(p, btn);
 
       //append all new elements under modal-body class
