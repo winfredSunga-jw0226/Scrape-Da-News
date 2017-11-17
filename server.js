@@ -15,7 +15,7 @@ var cheerio = require("cheerio");
 var db = require("./models");
 
 //assign a port for our app
-//var PORT = process.env.PORT || 8800
+var PORT = process.env.PORT || 8800
 
 //initialize Express
 var app = express();
@@ -49,7 +49,9 @@ if (process.env.MONGODB_URI) {
   mongoose.connect(process.env.MONGODB_URI);
 } else {
   // THIS EXECUTES IF THIS IS BEING EXECUTED ON YOUR LOCAL MACHINE
-  mongoose.connect(databaseUri);
+  mongoose.connect(databaseUri, {
+    useMongoClient : true
+  });
 }
 // mongoose.connect("mongodb://localhost/mongoHeadlines", {
 //   useMongoClient : true
@@ -86,9 +88,9 @@ app.use("/allnews", allNewsRoutes);
 app.use("/savednews", savedNewsRoutes);
 
 //start the server
-// app.listen(PORT, function() {
-//   console.log(`App running on port : ${PORT}!`);
-// });
+app.listen(PORT, function() {
+  console.log(`App running on port : ${PORT}!`);
+});
 // app.listen(MONGODB_URI, function() {
 //   console.log(`App running on port : ${MONGODB_URI}!`);
 // });

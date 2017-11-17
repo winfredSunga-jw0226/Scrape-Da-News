@@ -2,3 +2,5 @@ MONGODB_URI: mongodb://heroku_kl28cv6r:g8he6oh7nc11s8hemr28fukkoi@ds155695.mlab.
 Winfreds-MacBook-Pro-2:Scrap
 
 Heroku Project URL : https://guarded-peak-13147.herokuapp.com/
+
+MONGODB_URI:         mongodb://heroku_kl28cv6r:g8he6oh7nc11s8hemr28fukkoi@ds155695.mlab.com:55695/heroku_kl28cv6r
