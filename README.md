@@ -2,7 +2,7 @@
 
 ### Overview
 
-This is a web gives users access to the lastest San Francisco Chronicle articles and gives options to - 
+This web app gives users access to the latest San Francisco Chronicle articles and gives options to - 
   * save articles
   * add/delete comments for a specific article
   * unsave articles. 
